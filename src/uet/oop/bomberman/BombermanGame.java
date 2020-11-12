@@ -82,6 +82,21 @@ public class BombermanGame extends Application {
                     break;
             }
         });
+
+        scene.setOnKeyReleased(k->{
+            switch (k.getCode()){
+                case UP:
+                case W:
+                case D:
+                case RIGHT:
+                case S:
+                case DOWN:
+                case A:
+                case LEFT:
+                    bomberman.setMoving(false);
+                    break;
+            }
+        });
     }
 
     public void createMap() {
