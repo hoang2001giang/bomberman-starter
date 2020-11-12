@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
-    
+
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
-    
+
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
@@ -59,8 +59,29 @@ public class BombermanGame extends Application {
 
         createMap();
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
+
+        scene.setOnKeyPressed(k->{
+            switch (k.getCode()){
+                case UP:
+                case W:
+                    bomberman.moveUp();
+                    break;
+                case D:
+                case RIGHT:
+                    bomberman.moveRight();
+                    break;
+                case S:
+                case DOWN:
+                    bomberman.moveDown();
+                    break;
+                case A:
+                case LEFT:
+                    bomberman.moveLeft();
+                    break;
+            }
+        });
     }
 
     public void createMap() {
