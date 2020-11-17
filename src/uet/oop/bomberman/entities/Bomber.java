@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
 
@@ -11,14 +12,15 @@ import java.util.List;
 public class Bomber extends Entity {
 
 
-    private int speed;
+    private double speed;
     private boolean isMoving;
     private boolean isAlive;
     public Keyboard key;
     private int direction;
     protected int ani;
+    private double preX,preY;
 
-    public Bomber(int x, int y, Image img) {
+    public Bomber(double x, double y, Image img) {
         super(x, y, img);
         key =new Keyboard();
         direction=3;
@@ -26,13 +28,15 @@ public class Bomber extends Entity {
         isAlive=true;
         speed=1;
         ani=0;
+        preX=this.x;
+        preY=this.y;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
@@ -93,6 +97,7 @@ public class Bomber extends Entity {
         }
     }
 
+
     public void move(){
         int a=0,b=0;
         if(key.up)a--;
@@ -102,10 +107,8 @@ public class Bomber extends Entity {
 
         if(a!=0 || b!=0){
             ani++;
-            x+=b*speed;
-            y+=a*speed;
-            moveDirection(a,b);
             isMoving=true;
+            moveDirection(a,b);
         }
         else {
             isMoving=false;
@@ -113,11 +116,35 @@ public class Bomber extends Entity {
         }
     }
 
-    public void moveDirection(double xa, double ya) {
-        if(xa > 0) direction = 3;
-        if(xa < 0) direction = 1;
-        if(ya > 0) direction = 2;
-        if(ya < 0) direction = 4;
+    public void moveDirection(double a, double b) {
+        if(a > 0) direction = 3;
+        if(a < 0) direction = 1;
+        if(b > 0) direction = 2;
+        if(b < 0) direction = 4;
+
+        if(!canMove()){
+            x=preX;
+            y=preY;
+        }
+        if(canMove()){
+            preY=y;
+            y+=a*speed;
+            preX=x;
+            x += b * speed;
+        }
+    }
+
+    public boolean canMove(){
+        int n=BombermanGame.board.allEntity.size();
+        for(int i=0;i<n-1;i++){
+            if(BombermanGame.board.allEntity.get(i) instanceof Brick
+                || BombermanGame.board.allEntity.get(i) instanceof Wall){
+                if(this.isCollided(BombermanGame.board.allEntity.get(i))){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
@@ -127,6 +154,5 @@ public class Bomber extends Entity {
         }
         move();
         chooseSprite();
-
     }
 }

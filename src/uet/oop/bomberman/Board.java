@@ -7,17 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    public int width, height;
     protected Level level;
     public Bomber bomber;
     int _x,_y;
 
-    List<Entity> allEntity;
+    public List<Entity> allEntity;
     List<bomb> allBomb;
 
-    public Board(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public Board() {
         allBomb=new ArrayList<>();
         allEntity=new ArrayList<>();
         level=new Level();
@@ -70,5 +67,6 @@ public class Board {
 //                break;
         }
     }
+
 
 }

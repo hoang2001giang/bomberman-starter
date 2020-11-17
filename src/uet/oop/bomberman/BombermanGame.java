@@ -17,7 +17,7 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
 
-    Board board =new Board(WIDTH,HEIGHT);
+    public static Board board =new Board();
 
 
     public static void main(String[] args) {
