@@ -13,6 +13,7 @@ import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class BombermanGame extends Application {
     @Override
     public void start(Stage stage) {
         // Tao Canvas
+        stage.setTitle("ShazamBomber");
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
@@ -62,40 +64,14 @@ public class BombermanGame extends Application {
         Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
 
+
+
         scene.setOnKeyPressed(k->{
-            switch (k.getCode()){
-                case UP:
-                case W:
-                    bomberman.moveUp();
-                    break;
-                case D:
-                case RIGHT:
-                    bomberman.moveRight();
-                    break;
-                case S:
-                case DOWN:
-                    bomberman.moveDown();
-                    break;
-                case A:
-                case LEFT:
-                    bomberman.moveLeft();
-                    break;
-            }
+            bomberman.key.keyPressed(k);
         });
 
         scene.setOnKeyReleased(k->{
-            switch (k.getCode()){
-                case UP:
-                case W:
-                case D:
-                case RIGHT:
-                case S:
-                case DOWN:
-                case A:
-                case LEFT:
-                    bomberman.setMoving(false);
-                    break;
-            }
+            bomberman.key.keyReleased(k);
         });
     }
 
