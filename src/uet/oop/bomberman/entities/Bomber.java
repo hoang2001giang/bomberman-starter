@@ -19,6 +19,8 @@ public class Bomber extends Entity {
     private int direction;
     protected int ani;
     private double preX,preY;
+    private  List<bomb> bombList;
+    private boolean canBomb;
 
     public Bomber(double x, double y, Image img) {
         super(x, y, img);
@@ -26,10 +28,12 @@ public class Bomber extends Entity {
         direction=3;
         isMoving=false;
         isAlive=true;
-        speed=1;
+        speed=2;
         ani=0;
         preX=this.x;
         preY=this.y;
+        bombList=new ArrayList<>();
+        canBomb=true;
     }
 
     public double getSpeed() {
@@ -147,12 +151,20 @@ public class Bomber extends Entity {
         return true;
     }
 
+    public void placeBomb(){
+        if(key.space && canBomb){
+            BombermanGame.board.allEntity.add(new bomb(this.x/Sprite.SCALED_SIZE,this.y/Sprite.SCALED_SIZE,Sprite.bomb.getFxImage()));
+            canBomb=false;
+        }
+    }
+
     @Override
     public void update() {
         if(!isAlive){
             return;
         }
         move();
+        placeBomb();
         chooseSprite();
     }
 }

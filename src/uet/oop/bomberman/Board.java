@@ -12,16 +12,18 @@ public class Board {
     int _x,_y;
 
     public List<Entity> allEntity;
-    List<bomb> allBomb;
+
 
     public Board() {
-        allBomb=new ArrayList<>();
         allEntity=new ArrayList<>();
         level=new Level();
     }
 
     public void update(){
-        allEntity.forEach(Entity::update);
+        int n=allEntity.size();
+        for (int i=0;i<n;i++){
+            allEntity.get(i).update();
+        }
     }
 
     public void loadLevel(int i){

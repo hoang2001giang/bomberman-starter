@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class bomb extends Entity {
@@ -8,7 +9,7 @@ public class bomb extends Entity {
     protected int afterExp = 20;
     boolean exp= false;
 
-    public bomb(int xUnit, int yUnit, Image img) {
+    public bomb(double xUnit, double yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
 
@@ -16,4 +17,5 @@ public class bomb extends Entity {
     public void update() {
 
     }
+
 }

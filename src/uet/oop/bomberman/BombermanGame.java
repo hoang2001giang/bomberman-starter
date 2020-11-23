@@ -72,6 +72,10 @@ public class BombermanGame extends Application {
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        board.allEntity.forEach(g-> g.render(gc));
+//        board.allEntity.forEach(g-> g.render(gc));
+        int n=board.allEntity.size();
+        for (int i=0;i<n;i++){
+            board.allEntity.get(i).render(gc);
+        }
     }
 }
