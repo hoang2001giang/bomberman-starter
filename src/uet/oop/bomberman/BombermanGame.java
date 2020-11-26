@@ -17,7 +17,7 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
 
-    public static Board board =new Board();
+    public static Board board = new Board();
 
 
     public static void main(String[] args) {
@@ -53,11 +53,11 @@ public class BombermanGame extends Application {
 
         createMap();
 
-        scene.setOnKeyPressed(k->{
+        scene.setOnKeyPressed(k -> {
             board.bomber.key.keyPressed(k);
         });
 
-        scene.setOnKeyReleased(k->{
+        scene.setOnKeyReleased(k -> {
             board.bomber.key.keyReleased(k);
         });
     }
@@ -73,8 +73,8 @@ public class BombermanGame extends Application {
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 //        board.allEntity.forEach(g-> g.render(gc));
-        int n=board.allEntity.size();
-        for (int i=0;i<n;i++){
+        int n = board.allEntity.size();
+        for (int i = 0; i < n; i++) {
             board.allEntity.get(i).render(gc);
         }
     }

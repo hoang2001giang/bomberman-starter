@@ -8,6 +8,7 @@ import uet.oop.bomberman.input.Keyboard;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uet.oop.bomberman.entities.Bomber.Orient.*;
 
 public class Bomber extends Entity {
 
@@ -16,24 +17,26 @@ public class Bomber extends Entity {
     private boolean isMoving;
     private boolean isAlive;
     public Keyboard key;
-    private int direction;
+    private Orient direction;
     protected int ani;
-    private double preX,preY;
-    private  List<bomb> bombList;
-    private boolean canBomb;
+    private int preX, preY;
+    private List<bomb> bombList;
+    private int canBomb;
 
-    public Bomber(double x, double y, Image img) {
+    protected enum Orient {UP, DOWN, LEFT, RIGHT};
+
+    public Bomber(int x, int y, Image img) {
         super(x, y, img);
-        key =new Keyboard();
-        direction=3;
-        isMoving=false;
-        isAlive=true;
-        speed=2;
-        ani=0;
-        preX=this.x;
-        preY=this.y;
-        bombList=new ArrayList<>();
-        canBomb=true;
+        key = new Keyboard();
+        direction = DOWN;
+        isMoving = false;
+        isAlive = true;
+        speed = 2;
+        ani = 0;
+        preX = this.x;
+        preY = this.y;
+        bombList = new ArrayList<>();
+        canBomb = 1;
     }
 
     public double getSpeed() {
@@ -52,98 +55,72 @@ public class Bomber extends Entity {
         isMoving = moving;
     }
 
-    public void moveUp(int a) {
-        y = y - speed*a;
-        direction=1;
-    }
-
-    public void moveDown(int a) {
-        y += speed*a;
-        direction=3;
-    }
-
-    public void moveLeft(int a) {
-        x -= speed*a;
-        direction=4;
-    }
-
-    public void moveRight(int a) {
-        x += speed*a;
-        direction=2;
-    }
-
-    public void chooseSprite(){
-        switch(direction) {
-            case 1:
-                if(isMoving) {
+    public void chooseSprite() {
+        switch (direction) {
+            case UP:
+                if (isMoving) {
                     img = Sprite.movingSprite(Sprite.player_up_1, Sprite.player_up_2, ani, 20).getFxImage();
-                }
-                else img = Sprite.player_up.getFxImage();
+                } else img = Sprite.player_up.getFxImage();
                 break;
-            case 2:
-                if(isMoving) {
-                    img = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, ani, 20).getFxImage();
-                }
-                else img = Sprite.player_right.getFxImage();
+            case RIGHT:
+                if (isMoving) {
+                    img = Sprite.movingSprite(Sprite.player_right_2, Sprite.player_right_1, ani, 20).getFxImage();
+                } else img = Sprite.player_right.getFxImage();
                 break;
-            case 3:
-                if(isMoving) {
+            case DOWN:
+                if (isMoving) {
                     img = Sprite.movingSprite(Sprite.player_down_1, Sprite.player_down_2, ani, 20).getFxImage();
-                }
-                else img = Sprite.player_down.getFxImage();
+                } else img = Sprite.player_down.getFxImage();
                 break;
-            case 4:
-                if(isMoving) {
-                    img = Sprite.movingSprite(Sprite.player_left_1, Sprite.player_left_2, ani, 20).getFxImage();
-                }
-                else img = Sprite.player_left.getFxImage();
+            case LEFT:
+                if (isMoving) {
+                    img = Sprite.movingSprite(Sprite.player_left_2, Sprite.player_left_1, ani, 20).getFxImage();
+                } else img = Sprite.player_left.getFxImage();
                 break;
         }
     }
 
+    public void move() {
+        int a = 0, b = 0;
+        if (key.up) a--;
+        if (key.down) a++;
+        if (key.right) b++;
+        if (key.left) b--;
 
-    public void move(){
-        int a=0,b=0;
-        if(key.up)a--;
-        if(key.down)a++;
-        if(key.right)b++;
-        if(key.left)b--;
-
-        if(a!=0 || b!=0){
+        if (a != 0 || b != 0) {
             ani++;
-            isMoving=true;
-            moveDirection(a,b);
-        }
-        else {
-            isMoving=false;
-            ani=0;
+            isMoving = true;
+            moveDirection(a, b);
+        } else {
+            isMoving = false;
+            ani = 0;
         }
     }
 
     public void moveDirection(double a, double b) {
-        if(a > 0) direction = 3;
-        if(a < 0) direction = 1;
-        if(b > 0) direction = 2;
-        if(b < 0) direction = 4;
+        if (a > 0) direction = DOWN;
+        if (a < 0) direction = UP;
+        if (b > 0) direction = RIGHT;
+        if (b < 0) direction = LEFT;
 
-        if(!canMove()){
-            x=preX;
-            y=preY;
+        if (!canMove()) {
+            x = preX;
+            y = preY;
         }
-        if(canMove()){
-            preY=y;
-            y+=a*speed;
-            preX=x;
+        if (canMove()) {
+            preY = y;
+            y += a * speed;
+            preX = x;
             x += b * speed;
         }
     }
 
-    public boolean canMove(){
-        int n=BombermanGame.board.allEntity.size();
-        for(int i=0;i<n-1;i++){
-            if(BombermanGame.board.allEntity.get(i) instanceof Brick
-                || BombermanGame.board.allEntity.get(i) instanceof Wall){
-                if(this.isCollided(BombermanGame.board.allEntity.get(i))){
+    public boolean canMove() {
+        int n = BombermanGame.board.allEntity.size();
+        for (int i = 0; i < n - 1; i++) {
+            if (BombermanGame.board.allEntity.get(i) instanceof Brick
+                    || BombermanGame.board.allEntity.get(i) instanceof Wall) {
+                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
                     return false;
                 }
             }
@@ -151,20 +128,30 @@ public class Bomber extends Entity {
         return true;
     }
 
-    public void placeBomb(){
-        if(key.space && canBomb){
-            BombermanGame.board.allEntity.add(new bomb(this.x/Sprite.SCALED_SIZE,this.y/Sprite.SCALED_SIZE,Sprite.bomb.getFxImage()));
-            canBomb=false;
+    public void placeBomb() {
+        if (key.space && canBomb > 0) {
+            BombermanGame.board.allEntity.add(new bomb( this.x / Sprite.SCALED_SIZE,  (this.y +16) / Sprite.SCALED_SIZE));
+            canBomb--;
         }
     }
 
     @Override
     public void update() {
-        if(!isAlive){
+        if (!isAlive) {
             return;
         }
         move();
         placeBomb();
         chooseSprite();
+    }
+
+
+    public boolean isCollided(Entity e) {
+        if (e instanceof Grass) return false;
+        if ((x + Sprite.SCALED_SIZE <= e.x + 8) || (y + Sprite.SCALED_SIZE <= e.y)
+                || (e.x + Sprite.SCALED_SIZE <= x) || (e.y + Sprite.SCALED_SIZE - 8 <= y)) {
+            return false;
+        }
+        return true;
     }
 }
