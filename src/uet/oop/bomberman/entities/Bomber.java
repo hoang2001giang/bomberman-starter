@@ -130,7 +130,7 @@ public class Bomber extends Entity {
 
     public void placeBomb() {
         if (key.space && canBomb > 0) {
-            BombermanGame.board.allEntity.add(new bomb( this.x / Sprite.SCALED_SIZE,  (this.y +16) / Sprite.SCALED_SIZE));
+            BombermanGame.board.allEntity.add(new bomb( (this.x +16)/ Sprite.SCALED_SIZE,  (this.y +16) / Sprite.SCALED_SIZE));
             canBomb--;
         }
     }

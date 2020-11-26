@@ -11,4 +11,9 @@ public class Portal extends Entity {
     public void update() {
 
     }
+
+    @Override
+    public boolean isCollided(Entity e) {
+        return false;
+    }
 }
