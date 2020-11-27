@@ -10,6 +10,7 @@ public class Board {
     protected Level level;
     public Bomber bomber;
     int _x, _y;
+    public boolean canBomb;
 
     public List<Entity> allEntity;
 
@@ -17,6 +18,7 @@ public class Board {
     public Board() {
         allEntity = new ArrayList<>();
         level = new Level();
+        canBomb=true;
     }
 
     public void update() {
@@ -68,6 +70,16 @@ public class Board {
 //                _board.addEntitie(pos, new GrassTile(x, y, Sprite.grass) );
 //                break;
         }
+    }
+
+    public Entity getEntityAt(int _x,int _y){
+        int n=allEntity.size();
+        for(int i=n-1;i>=0;i--){
+            if(allEntity.get(i).getY() == _y && allEntity.get(i).getX() == _x){
+                return allEntity.get(i);
+            }
+        }
+        return null;
     }
 
 

@@ -21,7 +21,6 @@ public class Bomber extends Entity {
     protected int ani;
     private int preX, preY;
     private List<bomb> bombList;
-    private int canBomb;
 
     protected enum Orient {UP, DOWN, LEFT, RIGHT};
 
@@ -36,7 +35,6 @@ public class Bomber extends Entity {
         preX = this.x;
         preY = this.y;
         bombList = new ArrayList<>();
-        canBomb = 1;
     }
 
     public double getSpeed() {
@@ -129,9 +127,9 @@ public class Bomber extends Entity {
     }
 
     public void placeBomb() {
-        if (key.space && canBomb > 0) {
+        if (key.space && BombermanGame.board.canBomb) {
             BombermanGame.board.allEntity.add(new bomb( (this.x +16)/ Sprite.SCALED_SIZE,  (this.y +16) / Sprite.SCALED_SIZE));
-            canBomb--;
+            BombermanGame.board.canBomb=false;
         }
     }
 
@@ -144,7 +142,6 @@ public class Bomber extends Entity {
         placeBomb();
         chooseSprite();
     }
-
 
     public boolean isCollided(Entity e) {
         if (e instanceof Grass) return false;

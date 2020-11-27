@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class bomb extends Entity {
@@ -10,7 +11,7 @@ public class bomb extends Entity {
     protected int frameTime = 20;
     boolean exploded = false;
     protected int size;
-    protected Explosion[] explosions = null;
+    protected Dexp[] explosions = null;
 
     public bomb(int xUnit, int yUnit) {
         super(xUnit, yUnit, Sprite.bomb.getFxImage());
@@ -18,11 +19,8 @@ public class bomb extends Entity {
     }
 
     private void explode() {
-        explosions = new Explosion[1 + size*4];
-        for (Explosion explosion : explosions) {
-
-        }
-
+        exploded =true;
+        BombermanGame.board.canBomb=true;
     }
 
     @Override
@@ -42,13 +40,29 @@ public class bomb extends Entity {
             }
         }
         else {
-//            explode();
+            BombermanGame.board.canBomb=true;
+            img = Sprite.bomb_exploded2.getFxImage();
+            if (frameTime > 0) {
+                frameTime--;
+                renderExplosions();
+            } else {
+                BombermanGame.board.allEntity.remove(this);
+            }
         }
     }
+
+    public void renderExplosions(){
+        explosions = new Dexp[4];
+        for(int i=0;i<explosions.length;i++){
+            explosions[i]=new Dexp(this.x,this.y,i,size);
+        }
+    }
+
 
     @Override
     public boolean isCollided(Entity e) {
         return false;
     }
+
 
 }

@@ -14,7 +14,7 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
 
-    private GraphicsContext gc;
+    public static GraphicsContext gc;
     private Canvas canvas;
 
     public static Board board = new Board();
@@ -45,8 +45,8 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                render();
                 update();
+                render();
             }
         };
         timer.start();
@@ -72,7 +72,6 @@ public class BombermanGame extends Application {
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//        board.allEntity.forEach(g-> g.render(gc));
         int n = board.allEntity.size();
         for (int i = 0; i < n; i++) {
             board.allEntity.get(i).render(gc);
