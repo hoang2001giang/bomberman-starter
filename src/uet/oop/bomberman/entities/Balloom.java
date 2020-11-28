@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
@@ -20,6 +21,7 @@ public class Balloom extends Enemy {
         speed=1;
         direction=g.nextInt(4);
         changeTime+= g.nextInt(30);
+        isAlive=true;
     }
 
     public boolean canMove() {
@@ -31,34 +33,42 @@ public class Balloom extends Enemy {
                     return false;
                 }
             }
+            if(BombermanGame.board.allEntity.get(i) instanceof Bomber){
+                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
+                    ((Bomber) BombermanGame.board.allEntity.get(i)).setAlive(false);
+                    return true;
+                }
+            }
         }
         return true;
     }
 
     public void move(){
-        if(!canMove()){
-            Random g = new Random();
-            x=preX;
-            y=preY;
-            direction = g.nextInt(4);
-        }
-        if(canMove()){
-            switch (direction){
-                case 0:
-                    preY=y;
-                    y-=speed;
-                    break;
-                case 1:
-                    preX=x;
-                    x+=speed;break;
-                case 2:
-                    preY=y;
-                    y+=speed;
-                    break;
-                case 3:
-                    preX=x;
-                    x-=speed;
-                    break;
+        if(isAlive){
+            if(!canMove()){
+                Random g = new Random();
+                x=preX;
+                y=preY;
+                direction = g.nextInt(4);
+            }
+            if(canMove()){
+                switch (direction){
+                    case 0:
+                        preY=y;
+                        y-=speed;
+                        break;
+                    case 1:
+                        preX=x;
+                        x+=speed;break;
+                    case 2:
+                        preY=y;
+                        y+=speed;
+                        break;
+                    case 3:
+                        preX=x;
+                        x-=speed;
+                        break;
+                }
             }
         }
     }
@@ -89,6 +99,14 @@ public class Balloom extends Enemy {
     public void update() {
         move();
         chooseSprite();
+        if(!isAlive){
+            if(deadTime>0){
+                deadTime--;
+                img=Sprite.balloom_dead.getFxImage();
+            }
+            else{
+                BombermanGame.board.allEntity.remove(this);
+            }
+        }
     }
-
 }

@@ -55,15 +55,34 @@ public class Explosion extends Entity {
     public void update() {
         if(timeLast>0){
             timeLast--;
+            canKill();
         }
         else {
             BombermanGame.board.allEntity.remove(this);
         }
     }
 
-    @Override
+    public void canKill(){
+        for (int i = 0; i < BombermanGame.board.allEntity.size() ; i++) {
+            if (BombermanGame.board.allEntity.get(i) instanceof Bomber) {
+                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
+                    ((Bomber) BombermanGame.board.allEntity.get(i)).setAlive(false);
+                }
+            }
+            if (BombermanGame.board.allEntity.get(i) instanceof Enemy) {
+                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
+                    ((Enemy) BombermanGame.board.allEntity.get(i)).setAlive(false);
+                }
+            }
+        }
+    }
+
     public boolean isCollided(Entity e) {
-        return false;
+        if ((x + Sprite.SCALED_SIZE <= e.x ) || (y + Sprite.SCALED_SIZE <= e.y)
+                || (e.x + Sprite.SCALED_SIZE <= x) || (e.y + Sprite.SCALED_SIZE  <= y)) {
+            return false;
+        }
+        return true;
     }
 
 

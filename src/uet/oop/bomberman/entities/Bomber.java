@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
@@ -21,7 +22,7 @@ public class Bomber extends Entity {
     protected int ani;
     private int preX, preY;
     private List<bomb> bombList;
-    private int killTime=20;
+    private int killTime=60;
     public int bombSize;
 
 
@@ -145,10 +146,10 @@ public class Bomber extends Entity {
     public void kill(){
         if(killTime>0){
             killTime--;
-            img=Sprite.movingSprite(Sprite.player_dead1,Sprite.player_dead2,killTime,20).getFxImage();
+            img=Sprite.movingSprite(Sprite.player_dead1,Sprite.player_dead2,Sprite.player_dead3,killTime,15).getFxImage();
         }
         else {
-            killTime=20;
+            killTime=60;
             isAlive=true;
             x=32;
             y=32;
@@ -157,12 +158,23 @@ public class Bomber extends Entity {
 
     @Override
     public void update() {
-        if (!isAlive) {
+        if(isAlive){
+            move();
+            placeBomb();
+            chooseSprite();
+        }
+    }
+
+    @Override
+    public void render(GraphicsContext gc) {
+        if(isAlive){
+            chooseSprite();
+        }
+        else {
             kill();
         }
-        move();
-        placeBomb();
-        chooseSprite();
+
+        gc.drawImage(img,x,y);
     }
 
     public boolean isCollided(Entity e) {
