@@ -77,6 +77,10 @@ public class Board {
                 allEntity.add(new P_flame(x,y,Sprite.powerup_flames.getFxImage()));
                 allEntity.add(new Brick(x, y, Sprite.brick.getFxImage()));
                 break;
+            case 'x':
+                allEntity.add(new Portal(x,y,Sprite.portal.getFxImage()));
+                allEntity.add(new Brick(x, y, Sprite.brick.getFxImage()));
+                break;
         }
     }
 
