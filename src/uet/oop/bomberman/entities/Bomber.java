@@ -151,8 +151,9 @@ public class Bomber extends Entity {
         else {
             killTime=60;
             isAlive=true;
-            x=32;
-            y=32;
+            direction=RIGHT;
+            x=Sprite.SCALED_SIZE;
+            y=Sprite.SCALED_SIZE;
         }
     }
 

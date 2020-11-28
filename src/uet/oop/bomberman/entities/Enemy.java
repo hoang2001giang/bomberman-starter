@@ -32,4 +32,14 @@ public abstract class Enemy extends Entity {
         }
         return true;
     }
+
+    public boolean isCollidedBomber(Entity e) {
+        if (e instanceof Grass) return false;
+        if ((x + Sprite.SCALED_SIZE <= e.x +8 ) || (y + Sprite.SCALED_SIZE -8 <= e.y)
+                || (e.x + Sprite.SCALED_SIZE <= x+8) || (e.y + Sprite.SCALED_SIZE  <= y +8)) {
+            return false;
+        }
+        return true;
+    }
+
 }

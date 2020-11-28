@@ -78,7 +78,7 @@ public class Explosion extends Entity {
     }
 
     public boolean isCollided(Entity e) {
-        if ((x + Sprite.SCALED_SIZE <= e.x ) || (y + Sprite.SCALED_SIZE <= e.y)
+        if ((x + Sprite.SCALED_SIZE+16 <= e.x ) || (y + Sprite.SCALED_SIZE +16<= e.y)
                 || (e.x + Sprite.SCALED_SIZE <= x) || (e.y + Sprite.SCALED_SIZE  <= y)) {
             return false;
         }

@@ -34,7 +34,7 @@ public class Balloom extends Enemy {
                 }
             }
             if(BombermanGame.board.allEntity.get(i) instanceof Bomber){
-                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
+                if (this.isCollidedBomber(BombermanGame.board.allEntity.get(i))) {
                     ((Bomber) BombermanGame.board.allEntity.get(i)).setAlive(false);
                     return true;
                 }
