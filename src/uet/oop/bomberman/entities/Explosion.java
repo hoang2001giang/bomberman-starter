@@ -78,8 +78,8 @@ public class Explosion extends Entity {
     }
 
     public boolean isCollided(Entity e) {
-        if ((x + Sprite.SCALED_SIZE+16 <= e.x ) || (y + Sprite.SCALED_SIZE +16<= e.y)
-                || (e.x + Sprite.SCALED_SIZE <= x) || (e.y + Sprite.SCALED_SIZE  <= y)) {
+        if ((x + Sprite.SCALED_SIZE-8 <= e.x ) || (y + Sprite.SCALED_SIZE -8<= e.y)
+                || (e.x + Sprite.SCALED_SIZE <= x+8) || (e.y + Sprite.SCALED_SIZE  <= y+8)) {
             return false;
         }
         return true;
