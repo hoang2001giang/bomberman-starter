@@ -1,6 +1,7 @@
 package uet.oop.bomberman;
 
 import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.powerup.P_flame;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
@@ -33,6 +34,12 @@ public class Board {
             level.load(path);
             for (int y = 0; y < level._height; y++) {
                 for (int x = 0; x < level._width; x++) {
+                    addLevelEntity(' ', x, y);
+                }
+            }
+            for (int y = 0; y < level._height; y++) {
+                for (int x = 0; x < level._width; x++) {
+                    if(level._lineTiles[y].charAt(x)!=' ')
                     addLevelEntity(level._lineTiles[y].charAt(x), x, y);
                 }
             }
@@ -49,7 +56,6 @@ public class Board {
                 allEntity.add(new Wall(x, y, Sprite.wall.getFxImage()));
                 break;
             case '*':
-                allEntity.add(new Grass(x, y, Sprite.grass.getFxImage()));
                 allEntity.add(new Brick(x, y, Sprite.brick.getFxImage()));
                 break;
             case ' ':
@@ -60,20 +66,22 @@ public class Board {
                 _x = x;
                 _y = y;
                 break;
-//            case '1':
-//                _board.addMob( new Balloom(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
-//                _board.addEntitie(pos, new GrassTile(x, y, Sprite.grass) );
-//                break;
+            case '1':
+                allEntity.add(new Balloom(x,y,Sprite.balloom_left1.getFxImage()));
+                break;
 //            case '2':
 //                _board.addMob( new Oneal(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
 //                _board.addEntitie(pos, new GrassTile(x, y, Sprite.grass) );
 //                break;
+            case 'f':
+                allEntity.add(new P_flame(x,y,Sprite.powerup_flames.getFxImage()));
+                allEntity.add(new Brick(x, y, Sprite.brick.getFxImage()));
+                break;
         }
     }
 
     public Entity getEntityAt(int _x,int _y){
-        int n=allEntity.size();
-        for(int i=n-1;i>=0;i--){
+        for(int i=allEntity.size()-1;i>=0;i--){
             if(allEntity.get(i).getY() == _y && allEntity.get(i).getX() == _x){
                 return allEntity.get(i);
             }

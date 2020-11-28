@@ -13,9 +13,9 @@ public class bomb extends Entity {
     protected int size;
     protected Dexp[] explosions = null;
 
-    public bomb(int xUnit, int yUnit) {
+    public bomb(int xUnit, int yUnit,int s) {
         super(xUnit, yUnit, Sprite.bomb.getFxImage());
-        this.size = 1;
+        this.size = s;
     }
 
     private void explode() {

@@ -21,6 +21,9 @@ public class Bomber extends Entity {
     protected int ani;
     private int preX, preY;
     private List<bomb> bombList;
+    private int killTime=20;
+    public int bombSize;
+
 
     protected enum Orient {UP, DOWN, LEFT, RIGHT};
 
@@ -35,6 +38,7 @@ public class Bomber extends Entity {
         preX = this.x;
         preY = this.y;
         bombList = new ArrayList<>();
+        bombSize=1;
     }
 
     public double getSpeed() {
@@ -114,11 +118,16 @@ public class Bomber extends Entity {
     }
 
     public boolean canMove() {
-        int n = BombermanGame.board.allEntity.size();
-        for (int i = 0; i < n - 1; i++) {
+        for (int i = 0; i < BombermanGame.board.allEntity.size() ; i++) {
             if (BombermanGame.board.allEntity.get(i) instanceof Brick
                     || BombermanGame.board.allEntity.get(i) instanceof Wall) {
                 if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
+                    return false;
+                }
+            }
+            else if (BombermanGame.board.allEntity.get(i) instanceof Explosion){
+                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
+                    this.kill();
                     return false;
                 }
             }
@@ -128,15 +137,28 @@ public class Bomber extends Entity {
 
     public void placeBomb() {
         if (key.space && BombermanGame.board.canBomb) {
-            BombermanGame.board.allEntity.add(new bomb( (this.x +16)/ Sprite.SCALED_SIZE,  (this.y +16) / Sprite.SCALED_SIZE));
+            BombermanGame.board.allEntity.add(new bomb( (this.x +16)/ Sprite.SCALED_SIZE,  (this.y +16) / Sprite.SCALED_SIZE,bombSize));
             BombermanGame.board.canBomb=false;
+        }
+    }
+
+    public void kill(){
+        if(killTime>0){
+            killTime--;
+            img=Sprite.movingSprite(Sprite.player_dead1,Sprite.player_dead2,killTime,20).getFxImage();
+        }
+        else {
+            killTime=20;
+            isAlive=true;
+            x=32;
+            y=32;
         }
     }
 
     @Override
     public void update() {
         if (!isAlive) {
-            return;
+            kill();
         }
         move();
         placeBomb();
@@ -150,5 +172,21 @@ public class Bomber extends Entity {
             return false;
         }
         return true;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public int getBombSize() {
+        return bombSize;
+    }
+
+    public void setBombSize(int bombSize) {
+        this.bombSize = bombSize;
     }
 }
