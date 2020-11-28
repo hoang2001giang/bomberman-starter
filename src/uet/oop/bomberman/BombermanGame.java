@@ -6,8 +6,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import uet.oop.bomberman.graphics.Sprite;
+
+import java.io.File;
 
 public class BombermanGame extends Application {
 
@@ -41,6 +45,11 @@ public class BombermanGame extends Application {
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
+        String path = "music.wav";
+
+        Media media =new Media(new File(path).toURI().toString());
+        MediaPlayer mediaplayer =new MediaPlayer(media);
+        mediaplayer.setAutoPlay(true);
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
