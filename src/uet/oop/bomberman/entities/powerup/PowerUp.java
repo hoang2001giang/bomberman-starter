@@ -29,8 +29,8 @@ public abstract class PowerUp extends Entity {
 
     @Override
     public boolean isCollided(Entity e) {
-        if ((x + Sprite.SCALED_SIZE <= e.getX() ) || (y + Sprite.SCALED_SIZE <= e.getY())
-                || (e.getX() + Sprite.SCALED_SIZE <= x) || (e.getY() + Sprite.SCALED_SIZE - 8 <= y)) {
+        if ((x + Sprite.SCALED_SIZE <= e.getX() +8) || (y + Sprite.SCALED_SIZE-10 <= e.getY())
+                || (e.getX() + Sprite.SCALED_SIZE -10<= x) || (e.getY() + Sprite.SCALED_SIZE - 8 <= y)) {
             return false;
         }
         return true;

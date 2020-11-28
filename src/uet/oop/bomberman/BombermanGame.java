@@ -31,7 +31,6 @@ public class BombermanGame extends Application {
     @Override
     public void start(Stage stage) {
         // Tao Canvas
-        stage.setTitle("ShazamBomber");
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
@@ -46,7 +45,6 @@ public class BombermanGame extends Application {
         stage.setScene(scene);
         stage.show();
         String path = "music.wav";
-
         Media media =new Media(new File(path).toURI().toString());
         MediaPlayer mediaplayer =new MediaPlayer(media);
         mediaplayer.setAutoPlay(true);
@@ -56,6 +54,7 @@ public class BombermanGame extends Application {
             public void handle(long l) {
                 update();
                 render();
+                stage.setTitle("ShazamBomber-Level: "+board.getLevel().get_level());
             }
         };
         timer.start();
@@ -85,4 +84,5 @@ public class BombermanGame extends Application {
             board.allEntity.get(i).render(gc);
         }
     }
+
 }

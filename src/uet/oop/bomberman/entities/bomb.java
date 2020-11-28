@@ -9,7 +9,6 @@ public class bomb extends Entity {
 
     protected int explodeTime = 120;
     protected int frameTime = 20;
-    boolean exploded = false;
     protected int size;
     protected Dexp[] explosions = null;
 
@@ -18,10 +17,6 @@ public class bomb extends Entity {
         this.size = s;
     }
 
-    private void explode() {
-        exploded =true;
-        BombermanGame.board.canBomb=true;
-    }
 
     @Override
     public void update() {
@@ -40,13 +35,13 @@ public class bomb extends Entity {
             }
         }
         else {
-            BombermanGame.board.canBomb=true;
             img = Sprite.bomb_exploded2.getFxImage();
             renderExplosions(frameTime);
             if (frameTime > 0) {
                 frameTime--;
             } else {
                 BombermanGame.board.allEntity.remove(this);
+                BombermanGame.board.setBombNum(BombermanGame.board.getBombNum()+1);
             }
         }
     }

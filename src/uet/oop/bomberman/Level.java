@@ -38,5 +38,11 @@ public class Level {
         }
     }
 
+    public int get_level() {
+        return _level;
+    }
 
+    public void set_level(int _level) {
+        this._level = _level;
+    }
 }

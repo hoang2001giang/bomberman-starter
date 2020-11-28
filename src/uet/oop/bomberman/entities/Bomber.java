@@ -24,6 +24,7 @@ public class Bomber extends Entity {
     private List<bomb> bombList;
     private int killTime=60;
     public int bombSize;
+    private int bombTime=10;
 
 
     protected enum Orient {UP, DOWN, LEFT, RIGHT};
@@ -137,10 +138,12 @@ public class Bomber extends Entity {
     }
 
     public void placeBomb() {
-        if (key.space && BombermanGame.board.canBomb) {
+        if (key.space && BombermanGame.board.getBombNum()>0 && bombTime>10) {
             BombermanGame.board.allEntity.add(new bomb( (this.x +16)/ Sprite.SCALED_SIZE,  (this.y +16) / Sprite.SCALED_SIZE,bombSize));
-            BombermanGame.board.canBomb=false;
+            BombermanGame.board.setBombNum(BombermanGame.board.getBombNum()-1);
+            bombTime=0;
         }
+        bombTime++;
     }
 
     public void kill(){
