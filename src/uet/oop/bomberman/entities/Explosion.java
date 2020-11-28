@@ -7,7 +7,7 @@ import uet.oop.bomberman.graphics.Sprite;
 public class Explosion extends Entity {
 
     protected boolean _last = false;
-    int timeLast=20;
+    int timeLast=19;
 
     public Explosion(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);

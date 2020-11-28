@@ -73,8 +73,7 @@ public class Dexp extends Entity{
             Entity entity = BombermanGame.board.getEntityAt(xE, yE);
             if (entity instanceof Wall) {
                 break;
-            } else if (entity instanceof Brick) {
-                ++r;
+            }if (entity instanceof Brick) {
                 ((Brick) entity).setDestroyed(true);
                 break;
             }

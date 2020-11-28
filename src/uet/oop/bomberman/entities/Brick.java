@@ -2,9 +2,11 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.graphics.Sprite;
 
 public class Brick extends Entity{
     boolean isDestroyed =false;
+    private int timeLeft=20;
 
     public boolean isDestroyed() {
         return isDestroyed;
@@ -23,7 +25,13 @@ public class Brick extends Entity{
     @Override
     public void update() {
         if(isDestroyed){
-            BombermanGame.board.allEntity.remove(this);
+            if(timeLeft>0){
+                timeLeft--;
+                img=Sprite.movingSprite(Sprite.brick_exploded,Sprite.brick_exploded1,timeLeft,20).getFxImage();
+            }
+            else {
+                BombermanGame.board.allEntity.remove(this);
+            }
         }
     }
 

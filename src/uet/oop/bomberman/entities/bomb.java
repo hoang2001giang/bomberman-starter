@@ -42,16 +42,17 @@ public class bomb extends Entity {
         else {
             BombermanGame.board.canBomb=true;
             img = Sprite.bomb_exploded2.getFxImage();
+            renderExplosions(frameTime);
             if (frameTime > 0) {
                 frameTime--;
-                renderExplosions();
             } else {
                 BombermanGame.board.allEntity.remove(this);
             }
         }
     }
 
-    public void renderExplosions(){
+    public void renderExplosions(int n){
+        if(n!=20) return;
         explosions = new Dexp[4];
         for(int i=0;i<explosions.length;i++){
             explosions[i]=new Dexp(this.x,this.y,i,size);
@@ -63,6 +64,5 @@ public class bomb extends Entity {
     public boolean isCollided(Entity e) {
         return false;
     }
-
 
 }

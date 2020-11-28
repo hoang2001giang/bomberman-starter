@@ -22,8 +22,7 @@ public class Board {
     }
 
     public void update() {
-        int n = allEntity.size();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < allEntity.size(); i++) {
             allEntity.get(i).update();
         }
     }
