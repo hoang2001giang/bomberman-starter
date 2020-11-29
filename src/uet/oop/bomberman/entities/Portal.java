@@ -12,12 +12,14 @@ public class Portal extends Entity {
     @Override
     public void update() {
         if(BombermanGame.board.getEnemyCount()==0){
-            for(int i=0;i< BombermanGame.board.allEntity.size();i++){
-                if(BombermanGame.board.allEntity.get(i) instanceof Bomber){
-                    if(this.isCollidedBomber(BombermanGame.board.allEntity.get(i))){
-                        BombermanGame.board.loadLevel(BombermanGame.board.getLevel().get_level()+1);
-                    }
-                }
+            if(this.isCollidedBomber(BombermanGame.board.bomber)){
+                BombermanGame.board.loadLevel(BombermanGame.board.getLevel().get_level()+1);
+            }
+        }
+        else {
+            if(this.isCollidedBomber(BombermanGame.board.bomber)){
+                BombermanGame.board.bomber.setX(BombermanGame.board.bomber.getPreX());
+                BombermanGame.board.bomber.setY(BombermanGame.board.bomber.getPreY());
             }
         }
     }

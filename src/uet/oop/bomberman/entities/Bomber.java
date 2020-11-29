@@ -177,7 +177,6 @@ public class Bomber extends Entity {
         else {
             kill();
         }
-
         gc.drawImage(img,x,y);
     }
 
@@ -206,5 +205,19 @@ public class Bomber extends Entity {
         this.bombSize = bombSize;
     }
 
+    public int getPreX() {
+        return preX;
+    }
 
+    public void setPreX(int preX) {
+        this.preX = preX;
+    }
+
+    public int getPreY() {
+        return preY;
+    }
+
+    public void setPreY(int preY) {
+        this.preY = preY;
+    }
 }

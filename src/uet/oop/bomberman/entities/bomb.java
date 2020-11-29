@@ -37,6 +37,9 @@ public class bomb extends Entity {
         else {
             img = Sprite.bomb_exploded2.getFxImage();
             renderExplosions(frameTime);
+            if(this.isCollidedBomber(BombermanGame.board.bomber)){
+                BombermanGame.board.bomber.setAlive(false);
+            }
             if (frameTime > 0) {
                 frameTime--;
             } else {
@@ -60,4 +63,12 @@ public class bomb extends Entity {
         return false;
     }
 
+    public boolean isCollidedBomber(Entity e) {
+        if (e instanceof Grass) return false;
+        if ((x + Sprite.SCALED_SIZE <= e.x +8 ) || (y + Sprite.SCALED_SIZE -8 <= e.y)
+                || (e.x + Sprite.SCALED_SIZE <= x+8) || (e.y + Sprite.SCALED_SIZE  <= y +8)) {
+            return false;
+        }
+        return true;
+    }
 }
