@@ -205,4 +205,6 @@ public class Bomber extends Entity {
     public void setBombSize(int bombSize) {
         this.bombSize = bombSize;
     }
+
+
 }

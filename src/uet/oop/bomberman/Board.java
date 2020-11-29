@@ -3,6 +3,7 @@ package uet.oop.bomberman;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.powerup.P_bomb;
 import uet.oop.bomberman.entities.powerup.P_flame;
+import uet.oop.bomberman.entities.powerup.P_speed;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class Board {
         canBomb=true;
         enemyCount=0;
         bombNum =1;
+        bomber = new Bomber(1, 1, Sprite.player_down.getFxImage());
     }
 
     public void update() {
@@ -53,7 +55,8 @@ public class Board {
                     addLevelEntity(level._lineTiles[y].charAt(x), x, y);
                 }
             }
-            bomber = new Bomber(_x, _y, Sprite.player_down.getFxImage());
+            bomber.setX(_x*Sprite.SCALED_SIZE);
+            bomber.setY(_y*Sprite.SCALED_SIZE);
             allEntity.add(bomber);
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,6 +93,10 @@ public class Board {
                 break;
             case 'b':
                 allEntity.add(new P_bomb(x,y,Sprite.powerup_bombs.getFxImage()));
+                allEntity.add(new Brick(x, y, Sprite.brick.getFxImage()));
+                break;
+            case 's':
+                allEntity.add(new P_speed(x,y,Sprite.powerup_speed.getFxImage()));
                 allEntity.add(new Brick(x, y, Sprite.brick.getFxImage()));
                 break;
             case 'x':
