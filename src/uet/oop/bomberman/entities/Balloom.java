@@ -1,10 +1,10 @@
 package uet.oop.bomberman.entities;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.nio.channels.spi.SelectorProvider;
 import java.util.Random;
 
 public class Balloom extends Enemy {
@@ -102,7 +102,12 @@ public class Balloom extends Enemy {
         if(!isAlive){
             if(deadTime>0){
                 deadTime--;
-                img=Sprite.balloom_dead.getFxImage();
+                if(deadTime>60){
+                    img=Sprite.balloom_dead.getFxImage();
+                }
+                else {
+                    img= Sprite.movingSprite(Sprite.mob_dead1,Sprite.mob_dead1,Sprite.mob_dead3,deadTime,20).getFxImage();
+                }
             }
             else{
                 BombermanGame.board.allEntity.remove(this);

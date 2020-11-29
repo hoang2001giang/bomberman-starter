@@ -8,7 +8,7 @@ public abstract class Enemy extends Entity {
     public int direction;
     protected int speed;
     boolean isAlive;
-    int deadTime=60;
+    int deadTime=90;
 
     public boolean isAlive() {
         return isAlive;
