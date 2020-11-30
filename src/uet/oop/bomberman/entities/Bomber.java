@@ -14,7 +14,7 @@ import static uet.oop.bomberman.entities.Bomber.Orient.*;
 public class Bomber extends Entity {
 
 
-    private double speed;
+    private int speed;
     private boolean isMoving;
     private boolean isAlive;
     public Keyboard key;
@@ -43,11 +43,11 @@ public class Bomber extends Entity {
         bombSize=1;
     }
 
-    public double getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
-    public void setSpeed(double speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 
@@ -101,41 +101,41 @@ public class Bomber extends Entity {
         }
     }
 
-    public void moveDirection(double a, double b) {
-        if (a > 0) direction = DOWN;
-        if (a < 0) direction = UP;
-        if (b > 0) direction = RIGHT;
-        if (b < 0) direction = LEFT;
-
-        if (!canMove()) {
-            x = preX;
-            y = preY;
-        }
-        if (canMove()) {
-            preY = y;
-            y += a * speed;
-            preX = x;
-            x += b * speed;
-        }
-    }
-
-    public boolean canMove() {
-        for (int i = 0; i < BombermanGame.board.allEntity.size() ; i++) {
-            if (BombermanGame.board.allEntity.get(i) instanceof Brick
-                    || BombermanGame.board.allEntity.get(i) instanceof Wall) {
-                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
-                    return false;
-                }
-            }
-            else if (BombermanGame.board.allEntity.get(i) instanceof Explosion){
-                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
-                    this.kill();
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+//    public void moveDirection(double a, double b) {
+//        if (a > 0) direction = DOWN;
+//        if (a < 0) direction = UP;
+//        if (b > 0) direction = RIGHT;
+//        if (b < 0) direction = LEFT;
+//
+//        if (!canMove()) {
+//            x = preX;
+//            y = preY;
+//        }
+//        if (canMove()) {
+//            preY = y;
+//            y += a * speed;
+//            preX = x;
+//            x += b * speed;
+//        }
+//    }
+//
+//    public boolean canMove() {
+//        for (int i = 0; i < BombermanGame.board.allEntity.size() ; i++) {
+//            if (BombermanGame.board.allEntity.get(i) instanceof Brick
+//                    || BombermanGame.board.allEntity.get(i) instanceof Wall) {
+//                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
+//                    return false;
+//                }
+//            }
+//            else if (BombermanGame.board.allEntity.get(i) instanceof Explosion){
+//                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
+//                    this.kill();
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
 
     public void placeBomb() {
         if (key.space && BombermanGame.board.getBombNum()>0 && bombTime>10) {
@@ -219,5 +219,43 @@ public class Bomber extends Entity {
 
     public void setPreY(int preY) {
         this.preY = preY;
+    }
+
+    public void moveDirection(int a, int b) {
+        if (a > 0) direction = DOWN;
+        if (a < 0) direction = UP;
+        if (b > 0) direction = RIGHT;
+        if (b < 0) direction = LEFT;
+
+        if(canMove(a, 0)) {
+            y += a * speed;
+        }
+
+        if(canMove(0, b)) {
+            x += b * speed;
+        }
+    }
+
+    public boolean canMove(int a, int b) {
+        int xx = x + b * speed;
+        int yy = y + a * speed;
+        for (Entity entity : BombermanGame.board.allEntity) {
+            if (entity instanceof Brick || entity instanceof Wall) {
+                if (this.isCollided(entity, xx, yy)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isCollided(Entity e, int x, int y) {
+        if (e instanceof Grass) return false;
+        if ((x + Sprite.SCALED_SIZE <= e.x + 8) || (y + Sprite.SCALED_SIZE <= e.y)
+                || (e.x + Sprite.SCALED_SIZE <= x) || (e.y + Sprite.SCALED_SIZE - 8 <= y)) {
+            return false;
+        }
+        return true;
+
     }
 }
