@@ -6,13 +6,13 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 
-public class Balloom extends Enemy {
+public class Kondoria extends Enemy{
 
     int changeTime=120;
 
-    public Balloom(int _x, int _y, Image a) {
+    public Kondoria(int _x, int _y, Image a) {
         Random g=new Random();
-        x=_x*Sprite.SCALED_SIZE;
+        x=_x* Sprite.SCALED_SIZE;
         y=_y*Sprite.SCALED_SIZE;
         preY=y;
         preX=x;
@@ -21,6 +21,25 @@ public class Balloom extends Enemy {
         direction=g.nextInt(4);
         changeTime+= g.nextInt(30);
         isAlive=true;
+    }
+
+    @Override
+    public boolean canMove() {
+        for (int i = 0; i < BombermanGame.board.allEntity.size() ; i++) {
+            if (BombermanGame.board.allEntity.get(i) instanceof Wall
+                    || BombermanGame.board.allEntity.get(i) instanceof bomb) {
+                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
+                    return false;
+                }
+            }
+            if(BombermanGame.board.allEntity.get(i) instanceof Bomber){
+                if (this.isCollidedBomber(BombermanGame.board.allEntity.get(i))) {
+                    ((Bomber) BombermanGame.board.allEntity.get(i)).setAlive(false);
+                    return true;
+                }
+            }
+        }
+        return true;
     }
 
     public void move(){
@@ -66,11 +85,11 @@ public class Balloom extends Enemy {
         switch (direction){
             case 0:
             case 1:
-                img=Sprite.movingSprite(Sprite.balloom_right1,Sprite.balloom_right2,changeTime,60).getFxImage();
+                img=Sprite.movingSprite(Sprite.kondoria_right1,Sprite.kondoria_right2,changeTime,60).getFxImage();
                 break;
             case 2:
             case 3:
-                img=Sprite.movingSprite(Sprite.balloom_left1,Sprite.balloom_left2,changeTime,60).getFxImage();
+                img=Sprite.movingSprite(Sprite.kondoria_left1,Sprite.kondoria_left2,changeTime,60).getFxImage();
                 break;
         }
     }
@@ -83,7 +102,7 @@ public class Balloom extends Enemy {
             if(deadTime>0){
                 deadTime--;
                 if(deadTime>60){
-                    img=Sprite.balloom_dead.getFxImage();
+                    img=Sprite.kondoria_dead.getFxImage();
                 }
                 else {
                     img= Sprite.movingSprite(Sprite.mob_dead1,Sprite.mob_dead1,Sprite.mob_dead3,deadTime,20).getFxImage();

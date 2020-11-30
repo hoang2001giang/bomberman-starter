@@ -51,8 +51,14 @@ public class Board {
             }
             for (int y = 0; y < level._height; y++) {
                 for (int x = 0; x < level._width; x++) {
-                    if(level._lineTiles[y].charAt(x)!=' ')
+                    if(level._lineTiles[y].charAt(x)!=' ' && level._lineTiles[y].charAt(x)!='5')
                     addLevelEntity(level._lineTiles[y].charAt(x), x, y);
+                }
+            }
+            for (int y = 0; y < level._height; y++) {
+                for (int x = 0; x < level._width; x++) {
+                    if(level._lineTiles[y].charAt(x)=='5')
+                        addLevelEntity(level._lineTiles[y].charAt(x), x, y);
                 }
             }
             bomber.setX(_x*Sprite.SCALED_SIZE);
@@ -83,10 +89,14 @@ public class Board {
                 allEntity.add(new Balloom(x,y,Sprite.balloom_left1.getFxImage()));
                 enemyCount++;
                 break;
-//            case '2':
-//                _board.addMob( new Oneal(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
-//                _board.addEntitie(pos, new GrassTile(x, y, Sprite.grass) );
-//                break;
+            case '2':
+                allEntity.add( new Oneal(x, y, Sprite.oneal_left1.getFxImage()));
+                enemyCount++;
+                break;
+            case '5':
+                allEntity.add( new Kondoria(x, y, Sprite.kondoria_right1.getFxImage()));
+                enemyCount++;
+                break;
             case 'f':
                 allEntity.add(new P_flame(x,y,Sprite.powerup_flames.getFxImage()));
                 allEntity.add(new Brick(x, y, Sprite.brick.getFxImage()));

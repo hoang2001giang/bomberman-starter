@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Enemy extends Entity {
@@ -22,6 +23,27 @@ public abstract class Enemy extends Entity {
     public void update() {
 
     }
+
+    public boolean canMove() {
+        for (int i = 0; i < BombermanGame.board.allEntity.size() ; i++) {
+            if (BombermanGame.board.allEntity.get(i) instanceof Brick
+                    || BombermanGame.board.allEntity.get(i) instanceof Wall
+                    || BombermanGame.board.allEntity.get(i) instanceof bomb) {
+                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
+                    return false;
+                }
+            }
+            if(BombermanGame.board.allEntity.get(i) instanceof Bomber){
+                if (this.isCollidedBomber(BombermanGame.board.allEntity.get(i))) {
+                    ((Bomber) BombermanGame.board.allEntity.get(i)).setAlive(false);
+                    return true;
+                }
+            }
+        }
+        return true;
+    }
+
+    public abstract void move();
 
     @Override
     public boolean isCollided(Entity e) {
