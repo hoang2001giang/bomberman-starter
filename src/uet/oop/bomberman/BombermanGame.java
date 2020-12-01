@@ -47,7 +47,7 @@ public class BombermanGame extends Application {
         String path = "music.wav";
         Media media =new Media(new File(path).toURI().toString());
         MediaPlayer mediaplayer =new MediaPlayer(media);
-        mediaplayer.setAutoPlay(true);
+//        mediaplayer.setAutoPlay(true);
 
         AnimationTimer timer = new AnimationTimer() {
             @Override

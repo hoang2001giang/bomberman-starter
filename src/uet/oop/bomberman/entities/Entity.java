@@ -33,11 +33,11 @@ public abstract class Entity {
 
     public abstract void update();
 
-    public double getX() {
+    public int getX() {
         return x;
     }
 
-    public double getY() {
+    public int getY() {
         return y;
     }
 

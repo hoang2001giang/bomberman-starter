@@ -228,10 +228,12 @@ public class Bomber extends Entity {
         if (b < 0) direction = LEFT;
 
         if(canMove(a, 0)) {
+            preY=y;
             y += a * speed;
         }
 
         if(canMove(0, b)) {
+            preX=x;
             x += b * speed;
         }
     }

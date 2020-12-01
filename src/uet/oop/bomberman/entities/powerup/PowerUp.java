@@ -12,8 +12,6 @@ public abstract class PowerUp extends Entity {
         super(xUnit, yUnit, img);
     }
 
-
-
     @Override
     public void update() {
         for(int i=0;i< BombermanGame.board.allEntity.size();i++){

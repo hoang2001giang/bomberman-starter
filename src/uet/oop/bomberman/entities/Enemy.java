@@ -5,11 +5,13 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Enemy extends Entity {
 
+    int firstX,firstY;
     int preX,preY;
     public int direction;
     protected int speed;
     boolean isAlive;
     int deadTime=90;
+    boolean isMoving;
 
     public boolean isAlive() {
         return isAlive;
@@ -26,17 +28,17 @@ public abstract class Enemy extends Entity {
 
     public boolean canMove() {
         for (int i = 0; i < BombermanGame.board.allEntity.size() ; i++) {
+            if(BombermanGame.board.allEntity.get(i) instanceof Bomber){
+                if (this.isCollidedBomber(BombermanGame.board.allEntity.get(i))) {
+                    ((Bomber) BombermanGame.board.allEntity.get(i)).setAlive(false);
+                    return true;
+                }
+            }
             if (BombermanGame.board.allEntity.get(i) instanceof Brick
                     || BombermanGame.board.allEntity.get(i) instanceof Wall
                     || BombermanGame.board.allEntity.get(i) instanceof bomb) {
                 if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
                     return false;
-                }
-            }
-            if(BombermanGame.board.allEntity.get(i) instanceof Bomber){
-                if (this.isCollidedBomber(BombermanGame.board.allEntity.get(i))) {
-                    ((Bomber) BombermanGame.board.allEntity.get(i)).setAlive(false);
-                    return true;
                 }
             }
         }
