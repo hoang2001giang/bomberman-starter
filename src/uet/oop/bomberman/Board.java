@@ -24,7 +24,7 @@ public class Board {
         level = new Level();
         canBomb=true;
         enemyCount=0;
-        bombNum =1;
+        bombNum =2;
         bomber = new Bomber(1, 1, Sprite.player_down.getFxImage());
     }
 

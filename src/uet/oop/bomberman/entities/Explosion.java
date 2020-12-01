@@ -74,6 +74,11 @@ public class Explosion extends Entity {
                     ((Enemy) BombermanGame.board.allEntity.get(i)).setAlive(false);
                 }
             }
+            if (BombermanGame.board.allEntity.get(i) instanceof bomb) {
+                if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
+                    ((bomb) BombermanGame.board.allEntity.get(i)).setExplodeTime(0);
+                }
+            }
         }
     }
 

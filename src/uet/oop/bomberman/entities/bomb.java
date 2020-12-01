@@ -49,6 +49,7 @@ public class bomb extends Entity {
         }
     }
 
+
     public void renderExplosions(int n){
         if(n!=20) return;
         explosions = new Dexp[4];
@@ -70,5 +71,13 @@ public class bomb extends Entity {
             return false;
         }
         return true;
+    }
+
+    public int getExplodeTime() {
+        return explodeTime;
+    }
+
+    public void setExplodeTime(int explodeTime) {
+        this.explodeTime = explodeTime;
     }
 }
