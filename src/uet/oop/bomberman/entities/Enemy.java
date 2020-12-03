@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities;
 
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.powerup.PowerUp;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Enemy extends Entity {
@@ -12,6 +13,7 @@ public abstract class Enemy extends Entity {
     boolean isAlive;
     int deadTime=90;
     boolean isMoving;
+    boolean justKill;
 
     public boolean isAlive() {
         return isAlive;
@@ -31,12 +33,13 @@ public abstract class Enemy extends Entity {
             if(BombermanGame.board.allEntity.get(i) instanceof Bomber){
                 if (this.isCollidedBomber(BombermanGame.board.allEntity.get(i))) {
                     ((Bomber) BombermanGame.board.allEntity.get(i)).setAlive(false);
-                    return true;
+                    return false;
                 }
             }
             if (BombermanGame.board.allEntity.get(i) instanceof Brick
                     || BombermanGame.board.allEntity.get(i) instanceof Wall
-                    || BombermanGame.board.allEntity.get(i) instanceof bomb) {
+                    || BombermanGame.board.allEntity.get(i) instanceof bomb
+                    || BombermanGame.board.allEntity.get(i) instanceof PowerUp) {
                 if (this.isCollided(BombermanGame.board.allEntity.get(i))) {
                     return false;
                 }
@@ -66,4 +69,18 @@ public abstract class Enemy extends Entity {
         return true;
     }
 
+    public void resetPlace(){
+        x=firstX;
+        y=firstY;
+        preX=x;
+        preY=y;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
 }

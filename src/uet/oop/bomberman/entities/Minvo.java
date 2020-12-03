@@ -7,12 +7,12 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 
-public class Oneal extends Enemy{
+public class Minvo extends Enemy{
     AI ai =new AI(BombermanGame.board.bomber,this);
     int ani;
     int restTime ;
 
-    public Oneal(int _x, int _y, Image i,int s) {
+    public Minvo(int _x, int _y, Image i) {
         x=_x* Sprite.SCALED_SIZE;
         y=_y*Sprite.SCALED_SIZE;
         img=i;
@@ -20,12 +20,11 @@ public class Oneal extends Enemy{
         preX=x;
         firstX=x;
         firstY=y;
-        speed=s;
+        speed=3;
         isAlive=true;
         direction = new Random().nextInt(4);
         ani=0;
         restTime=0;
-        justKill=false;
     }
 
 
@@ -72,7 +71,7 @@ public class Oneal extends Enemy{
             int m= ai.calculateV();
             if(direction==n || direction==m) return;
             if(x%32==0 && y%32==0)
-            direction= ai.calculateDirection();
+                direction= ai.calculateDirection();
         }
     }
 
@@ -99,11 +98,11 @@ public class Oneal extends Enemy{
         switch (direction){
             case 0:
             case 1:
-                img=Sprite.movingSprite(Sprite.oneal_right1,Sprite.oneal_right2,ani,60).getFxImage();
+                img=Sprite.movingSprite(Sprite.minvo_right1,Sprite.minvo_right2,ani,60).getFxImage();
                 break;
             case 2:
             case 3:
-                img=Sprite.movingSprite(Sprite.oneal_left1,Sprite.oneal_left2,ani,60).getFxImage();
+                img=Sprite.movingSprite(Sprite.minvo_left1,Sprite.minvo_left2,ani,60).getFxImage();
                 break;
         }
     }
@@ -121,7 +120,7 @@ public class Oneal extends Enemy{
             if(deadTime>0){
                 deadTime--;
                 if(deadTime>60){
-                    img=Sprite.oneal_dead.getFxImage();
+                    img=Sprite.minvo_dead.getFxImage();
                 }
                 else {
                     img= Sprite.movingSprite(Sprite.mob_dead1,Sprite.mob_dead1,Sprite.mob_dead3,deadTime,20).getFxImage();

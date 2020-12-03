@@ -24,7 +24,7 @@ public class Board {
         level = new Level();
         canBomb=true;
         enemyCount=0;
-        bombNum =2;
+        bombNum =1;
         bomber = new Bomber(1, 1, Sprite.player_down.getFxImage());
     }
 
@@ -90,7 +90,11 @@ public class Board {
                 enemyCount++;
                 break;
             case '2':
-                allEntity.add( new Oneal(x, y, Sprite.oneal_left1.getFxImage()));
+                allEntity.add( new Oneal(x, y, Sprite.oneal_left1.getFxImage(),2));
+                enemyCount++;
+                break;
+            case '4':
+                allEntity.add( new Oneal(x, y, Sprite.minvo_left2.getFxImage(),3));
                 enemyCount++;
                 break;
             case '5':

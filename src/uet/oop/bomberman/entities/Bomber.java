@@ -147,11 +147,17 @@ public class Bomber extends Entity {
     }
 
     public void kill(){
+        for(int i=0;i<BombermanGame.board.allEntity.size();i++){
+            if(BombermanGame.board.allEntity.get(i) instanceof Enemy){
+                ((Enemy) BombermanGame.board.allEntity.get(i)).resetPlace();
+            }
+        }
         if(killTime>0){
             killTime--;
             img=Sprite.movingSprite(Sprite.player_dead1,Sprite.player_dead2,Sprite.player_dead3,killTime,15).getFxImage();
         }
         else {
+
             killTime=60;
             isAlive=true;
             direction=RIGHT;

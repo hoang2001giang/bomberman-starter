@@ -16,6 +16,8 @@ public class Kondoria extends Enemy{
         y=_y*Sprite.SCALED_SIZE;
         preY=y;
         preX=x;
+        firstX=x;
+        firstY=y;
         img=a;
         speed=1;
         direction=g.nextInt(4);
